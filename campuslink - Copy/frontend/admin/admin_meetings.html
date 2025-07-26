@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CampusLink - Admin Meetings</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles/style.css" />
+  <link rel="stylesheet" href="../styles/animations.css" />
+  <link rel="stylesheet" href="../styles/enhanced-animations.css" />
+  <link rel="stylesheet" href="../styles/visual-effects.css" />
+  <link rel="stylesheet" href="../styles/navigation.css" />
+  <link rel="stylesheet" href="../styles/stylemeet.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="nav-brand">
+        <div class="brand-logo">🎓</div>
+        <div class="brand-text">
+          <h1>CampusLink</h1>
+          <span class="brand-tagline">Admin Portal</span>
+        </div>
+      </div>
+      <div class="nav-menu">
+        <div class="user-menu">
+          <div class="professional-profile-dropdown">
+            <button class="profile-trigger-pro" id="profileTrigger">
+              <div class="user-avatar-pro">
+                <span class="avatar-initial">A</span>
+              </div>
+              <div class="user-info">
+                <span class="user-name">Admin</span>
+                <span class="user-role">Administrator</span>
+              </div>
+              <div class="dropdown-chevron">⌄</div>
+            </button>
+            <div class="profile-dropdown-pro hidden" id="profileDropdown">
+              <div class="dropdown-header">
+                <div class="user-avatar-large">
+                  <span class="avatar-initial-large">A</span>
+                </div>
+                <div class="user-details">
+                  <h4 class="user-full-name">Administrator</h4>
+                  <p class="user-email">admin@campuslink.edu</p>
+                  <span class="user-status">Active Admin</span>
+                </div>
+              </div>
+              <div class="dropdown-divider"></div>
+              <div class="dropdown-menu">
+                <button class="menu-item" onclick="window.location.href='admin_home.html'">
+                  <div class="menu-icon">🏠</div>
+                  <div class="menu-content">
+                    <span class="menu-title">Dashboard</span>
+                    <span class="menu-subtitle">Back to home</span>
+                  </div>
+                </button>
+                <div class="menu-divider"></div>
+                <button class="menu-item logout-item" onclick="window.location.href='../login.html'">
+                  <div class="menu-icon">🚪</div>
+                  <div class="menu-content">
+                    <span class="menu-title">Sign Out</span>
+                    <span class="menu-subtitle">End session</span>
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="main">
+    <section class="dashboard">
+      <div class="container">
+        <div class="dashboard-header">
+          <div class="dashboard-welcome">
+            <h2>Meeting Management 🎯</h2>
+            <p>Schedule and manage campus meetings and sessions</p>
+          </div>
+          <div class="tabs">
+            <button class="tab-btn active" data-tab="browse">
+              <span class="tab-icon">🔍</span>
+              <span>Browse Sessions</span>
+            </button>
+            <button class="tab-btn" data-tab="create">
+              <span class="tab-icon">✨</span>
+              <span>Create Session</span>
+            </button>
+            <button class="tab-btn" data-tab="my-sessions">
+              <span class="tab-icon">📚</span>
+              <span>My Sessions</span>
+            </button>
+            <button class="tab-btn" data-tab="sessions">
+              <span class="tab-icon">🎥</span>
+              <span>Live Sessions</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Browse Sessions Tab -->
+        <div class="tab-content active" id="browseTab">
+          <div class="browse-header">
+            <h3>🌟 Discover Campus Sessions</h3>
+            <p>Find and join educational sessions from faculty and students</p>
+          </div>
+          <div class="filters-container">
+            <div class="filters">
+              <div class="filter-group">
+                <label for="categoryFilter">🏷 Category</label>
+                <select id="categoryFilter">
+                  <option value="">All Categories</option>
+                  <option value="Academic">📚 Academic</option>
+                  <option value="Workshop">🔧 Workshop</option>
+                  <option value="Seminar">🎤 Seminar</option>
+                  <option value="Training">💪 Training</option>
+                  <option value="Meeting">🤝 Meeting</option>
+                  <option value="Other">📋 Other</option>
+                </select>
+              </div>
+              <div class="filter-group">
+                <label for="levelFilter">📊 Level</label>
+                <select id="levelFilter">
+                  <option value="">All Levels</option>
+                  <option value="Beginner">🌱 Beginner</option>
+                  <option value="Intermediate">🌿 Intermediate</option>
+                  <option value="Advanced">🌳 Advanced</option>
+                </select>
+              </div>
+              <div class="filter-group search-container">
+                <label for="searchInput">🔍 Search</label>
+                <input type="text" id="searchInput" placeholder="Search sessions...">
+              </div>
+            </div>
+          </div>
+          <div class="browse-controls">
+            <div class="skills-count" id="skillsCount"></div>
+            <div class="view-controls">
+              <button class="view-btn active" data-view="grid" title="Grid view">
+                <span>⊞</span>
+              </button>
+              <button class="view-btn" data-view="list" title="List view">
+                <span>☰</span>
+              </button>
+            </div>
+          </div>
+          <div class="skills-container">
+            <div class="skills-grid" id="skillsGrid">
+              <!-- Sessions will be loaded here -->
+            </div>
+            <div class="no-results hidden" id="noResults">
+              <div class="no-results-icon">🔍</div>
+              <h3>No sessions found</h3>
+              <p>Try adjusting your filters or search terms</p>
+              <button class="btn btn-outline" onclick="clearFilters()">Clear Filters</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Create Session Tab -->
+        <div class="tab-content" id="createTab">
+          <div class="create-skill-header">
+            <div class="create-icon">🎓</div>
+            <div>
+              <h3>✨ Create New Session</h3>
+              <p class="create-subtitle">Schedule a new meeting or educational session</p>
+            </div>
+          </div>
+          <div class="create-form-container">
+            <form id="createSkillForm" class="create-form">
+              <div class="form-section">
+                <h4>🎯 Session Details</h4>
+                <div class="form-group">
+                  <label for="skillTitle">📚 Session Title</label>
+                  <input type="text" id="skillTitle" placeholder="e.g., Faculty Meeting, Student Workshop" required maxlength="100">
+                  <div class="char-counter">
+                    <span id="skillTitleCounter">0</span>/100 characters
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="skillDescription">📋 Description</label>
+                  <textarea id="skillDescription" placeholder="Describe the session objectives, agenda, and what participants will learn..." rows="4" required maxlength="500"></textarea>
+                  <div class="char-counter">
+                    <span id="skillDescCounter">0</span>/500 characters
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <h4>🏷 Session Classification</h4>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="skillCategory">📂 Category</label>
+                    <select id="skillCategory" required>
+                      <option value="">Choose category</option>
+                      <option value="Academic">📚 Academic</option>
+                      <option value="Workshop">🔧 Workshop</option>
+                      <option value="Seminar">🎤 Seminar</option>
+                      <option value="Training">💪 Training</option>
+                      <option value="Meeting">🤝 Meeting</option>
+                      <option value="Other">📋 Other</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="skillLevel">📊 Difficulty Level</label>
+                    <select id="skillLevel" required>
+                      <option value="">Select level</option>
+                      <option value="Beginner">🌱 Beginner</option>
+                      <option value="Intermediate">🌿 Intermediate</option>
+                      <option value="Advanced">🌳 Advanced</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-gradient btn-full">
+                <span class="btn-icon">✨</span>
+                Create Session
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- My Sessions Tab -->
+        <div class="tab-content" id="mySkillsTab">
+          <div class="my-skills-header">
+            <div class="skills-icon">📚</div>
+            <div>
+              <h3>🎆 Your Sessions</h3>
+              <p class="skills-subtitle">Manage your created sessions</p>
+            </div>
+          </div>
+          <div class="my-skills" id="mySkillsContainer">
+            <!-- User's sessions will be loaded here -->
+          </div>
+        </div>
+
+        <!-- Live Sessions Tab -->
+        <div class="tab-content" id="sessionsTab">
+          <div class="sessions-section">
+            <div class="session-header">
+              <div class="session-icon">🎯</div>
+              <div>
+                <h3>🚀 Schedule Live Session</h3>
+                <p class="session-subtitle">Create live meeting with Google Meet integration</p>
+              </div>
+            </div>
+            
+            <div class="session-form-container">
+              <form id="createSessionForm" class="session-form">
+                <div class="form-section">
+                  <h4>📚 Session Details</h4>
+                  <div class="form-group">
+                    <label for="sessionSkill">✨ Session Name</label>
+                    <input type="text" id="sessionSkill" placeholder="e.g., Advanced Campus Management" required>
+                  </div>
+                </div>
+
+                <div class="form-section">
+                  <h4>📅 Schedule</h4>
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label for="sessionDate">📆 Date</label>
+                      <input type="date" id="sessionDate" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="sessionTime">⏰ Time</label>
+                      <input type="time" id="sessionTime" required>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-section">
+                  <h4>👥 Participants & Meeting</h4>
+                  <div class="form-group">
+                    <label for="maxParticipants">👥 Max Participants</label>
+                    <select id="maxParticipants" required>
+                      <option value="">Select participant limit</option>
+                      <option value="10">10 participants (Small Group)</option>
+                      <option value="25">25 participants (Medium Group)</option>
+                      <option value="50">50 participants (Large Group)</option>
+                      <option value="100">100 participants (Assembly)</option>
+                      <option value="200">200 participants (Campus Wide)</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="meetingLink">🎥 Google Meet Link</label>
+                    <input type="url" id="meetingLink" placeholder="https://meet.google.com/xxx-xxxx-xxx" required>
+                    <small class="form-hint">💡 Create your meeting link at <a href="https://meet.google.com" target="_blank">meet.google.com</a></small>
+                  </div>
+                </div>
+
+                <button type="submit" class="btn btn-gradient btn-full" id="createSessionBtn">
+                  <span class="btn-icon">🚀</span>
+                  Launch Session
+                </button>
+              </form>
+            </div>
+            
+            <div class="sessions-list">
+              <div class="sessions-list-header">
+                <h3>📋 Your Scheduled Sessions</h3>
+                <div class="sessions-stats" id="sessionsStats">Loading...</div>
+              </div>
+              <div class="sessions-filter">
+                <select id="sessionStatusFilter">
+                  <option value="">All Sessions</option>
+                  <option value="upcoming">Upcoming</option>
+                  <option value="live">Live Now</option>
+                  <option value="completed">Completed</option>
+                </select>
+              </div>
+              <div id="sessionsContainer">
+                <!-- Sessions will be loaded here -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Notification Container -->
+  <div id="notificationContainer"></div>
+  
+  <!-- Loading Overlay -->
+  <div class="loading-overlay hidden" id="loadingOverlay">
+    <div class="loading-spinner">
+      <div class="spinner"></div>
+      <p id="loadingText">Loading...</p>
+    </div>
+  </div>
+
+  <!-- Floating Help Button -->
+  <button class="floating-help-btn" id="floatingHelpBtn" title="Need help?">
+    <span>❓</span>
+  </button>
+
+  <script src="../js/navigation.js"></script>
+  <script src="../js/campuslink-app.js"></script>
+  <script>
+    // Initialize with admin context
+    document.addEventListener('DOMContentLoaded', function() {
+      // Set admin user
+      currentUser = {
+        id: 1,
+        name: 'Administrator',
+        email: 'admin@campuslink.edu',
+        role: 'admin'
+      };
+      
+      // Initialize app
+      showDashboard();
+      
+      // Profile dropdown functionality
+      const profileTrigger = document.getElementById('profileTrigger');
+      const profileDropdown = document.getElementById('profileDropdown');
+      
+      if (profileTrigger && profileDropdown) {
+        profileTrigger.addEventListener('click', function(e) {
+          e.stopPropagation();
+          profileDropdown.classList.toggle('hidden');
+        });
+        
+        document.addEventListener('click', function(e) {
+          if (!profileTrigger.contains(e.target) && !profileDropdown.contains(e.target)) {
+            profileDropdown.classList.add('hidden');
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

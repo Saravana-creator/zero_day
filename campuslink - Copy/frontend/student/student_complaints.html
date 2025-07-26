@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student - Hostel Complaints</title>
+  <link rel="stylesheet" href="../styles/stylecom.css">
+  <link rel="stylesheet" href="../styles/navigation.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Hostel Complaint Management</h1>
+<div class="home-button-container">
+  <a href="student_home.html" class="home-btn">🏠 Home</a>
+</div>
+
+  <!-- Student Complaint Form -->
+  <div id="studentView">
+    <h2>Raise a Complaint</h2>
+    <form id="complaintForm">
+      <label>Name:</label>
+      <input type="text" id="name" required><br>
+
+      <label>Room No:</label>
+      <input type="text" id="room" required><br>
+
+      <label>Email:</label>
+      <input type="email" id="email" required><br>
+
+      <label>Category:</label>
+      <select id="category" required>
+        <option value="Electricity">Electricity</option>
+        <option value="Water">Water</option>
+        <option value="Cleaning">Cleaning</option>
+        <option value="Other">Other</option>
+      </select><br>
+
+      <label>Description:</label>
+      <textarea id="description" rows="3" required></textarea><br>
+
+      <button type="submit">Submit Complaint</button>
+    </form>
+
+    <!-- Student Complaints Table -->
+    <div class="table-container" style="margin-top: 40px;">
+      <h2>📄 My Complaints</h2>
+      <table id="myComplaintTable">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Description</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Student-specific complaints will go here -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  </div>
+
+  <!-- Hidden tables for JS compatibility -->
+  <table id="complaintTable" style="display: none;">
+    <tbody></tbody>
+  </table>
+  <table id="historyTable" style="display: none;">
+    <tbody></tbody>
+  </table>
+
+  <script src="../js/navigation.js"></script>
+  <script src="../js/com.js"></script>
+</body>
+</html>

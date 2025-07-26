@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusLink - Student Polls</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/navigation.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 80px 20px 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .poll-item {
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            background: #f9fafb;
+        }
+        .poll-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #1f2937;
+        }
+        .poll-meta {
+            color: #6b7280;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+        .poll-option {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 10px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+        .poll-option:hover {
+            border-color: #3b82f6;
+            background: #f0f4ff;
+        }
+        .poll-option.voted {
+            border-color: #10b981;
+            background: #f0fdf4;
+        }
+        .poll-option .progress {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background: #3b82f6;
+            opacity: 0.1;
+            transition: width 0.8s ease;
+        }
+        .poll-option .text {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .poll-status {
+            text-align: center;
+            padding: 15px;
+            margin-top: 15px;
+            border-top: 1px solid #e5e7eb;
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+        .stats-card {
+            text-align: center;
+            padding: 20px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            margin-bottom: 30px;
+        }
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🗳️ Campus Polls</h1>
+            <p>Participate in campus decisions and share your voice</p>
+        </div>
+
+        <div class="stats-card">
+            <div class="stat-number" id="participatedPolls">3</div>
+            <div>Polls Participated</div>
+        </div>
+
+        <div class="card">
+            <h3>Active Polls</h3>
+            
+            <div class="poll-item">
+                <div class="poll-title">Should the university extend library hours during exam periods?</div>
+                <div class="poll-meta">Category: Facilities • 170 votes • Expires in 3 days</div>
+                
+                <button class="poll-option" onclick="vote(1, 0)">
+                    <div class="progress" style="width: 50%"></div>
+                    <div class="text">
+                        <span>Yes, extend to 2 AM</span>
+                        <span>85 votes (50%)</span>
+                    </div>
+                </button>
+                
+                <button class="poll-option" onclick="vote(1, 1)">
+                    <div class="progress" style="width: 26%"></div>
+                    <div class="text">
+                        <span>Yes, extend to midnight</span>
+                        <span>45 votes (26%)</span>
+                    </div>
+                </button>
+                
+                <button class="poll-option" onclick="vote(1, 2)">
+                    <div class="progress" style="width: 19%"></div>
+                    <div class="text">
+                        <span>Current hours are fine</span>
+                        <span>32 votes (19%)</span>
+                    </div>
+                </button>
+                
+                <button class="poll-option" onclick="vote(1, 3)">
+                    <div class="progress" style="width: 5%"></div>
+                    <div class="text">
+                        <span>Reduce hours to save costs</span>
+                        <span>8 votes (5%)</span>
+                    </div>
+                </button>
+                
+                <div class="poll-status">
+                    🗳️ Click an option to vote
+                </div>
+            </div>
+
+            <div class="poll-item">
+                <div class="poll-title">Which programming language should be added to the CS curriculum?</div>
+                <div class="poll-meta">Category: Academics • 140 votes • Expires in 1 day</div>
+                
+                <button class="poll-option voted" onclick="vote(2, 0)">
+                    <div class="progress" style="width: 29%"></div>
+                    <div class="text">
+                        <span>TypeScript ✓</span>
+                        <span>41 votes (29%)</span>
+                    </div>
+                </button>
+                
+                <button class="poll-option" onclick="vote(2, 1)">
+                    <div class="progress" style="width: 24%"></div>
+                    <div class="text">
+                        <span>Rust</span>
+                        <span>34 votes (24%)</span>
+                    </div>
+                </button>
+                
+                <button class="poll-option" onclick="vote(2, 2)">
+                    <div class="progress" style="width: 20%"></div>
+                    <div class="text">
+                        <span>Go</span>
+                        <span>28 votes (20%)</span>
+                    </div>
+                </button>
+                
+                <button class="poll-option" onclick="vote(2, 3)">
+                    <div class="progress" style="width: 16%"></div>
+                    <div class="text">
+                        <span>Kotlin</span>
+                        <span>22 votes (16%)</span>
+                    </div>
+                </button>
+                
+                <button class="poll-option" onclick="vote(2, 4)">
+                    <div class="progress" style="width: 11%"></div>
+                    <div class="text">
+                        <span>Swift</span>
+                        <span>15 votes (11%)</span>
+                    </div>
+                </button>
+                
+                <div class="poll-status">
+                    ✅ You have voted in this poll
+                </div>
+            </div>
+
+            <div class="poll-item">
+                <div class="poll-title">What new food options would you like in the cafeteria?</div>
+                <div class="poll-meta">Category: Facilities • 313 votes • Multiple selections allowed • Expires in 5 days</div>
+                
+                <button class="poll-option" onclick="vote(3, 0)">
+                    <div class="progress" style="width: 28%"></div>
+                    <div class="text">
+                        <span>International cuisine</span>
+                        <span>89 votes (28%)</span>
+                    </div>
+                </button>
+                
+                <button class="poll-option" onclick="vote(3, 1)">
+                    <div class="progress" style="width: 25%"></div>
+                    <div class="text">
+                        <span>Late-night options</span>
+                        <span>78 votes (25%)</span>
+                    </div>
+                </button>
+                
+                <button class="poll-option" onclick="vote(3, 2)">
+                    <div class="progress" style="width: 21%"></div>
+                    <div class="text">
+                        <span>More vegetarian options</span>
+                        <span>67 votes (21%)</span>
+                    </div>
+                </button>
+                
+                <button class="poll-option" onclick="vote(3, 3)">
+                    <div class="progress" style="width: 14%"></div>
+                    <div class="text">
+                        <span>Healthy snacks</span>
+                        <span>45 votes (14%)</span>
+                    </div>
+                </button>
+                
+                <button class="poll-option" onclick="vote(3, 4)">
+                    <div class="progress" style="width: 11%"></div>
+                    <div class="text">
+                        <span>Local food vendors</span>
+                        <span>34 votes (11%)</span>
+                    </div>
+                </button>
+                
+                <div class="poll-status">
+                    🗳️ Click options to vote (multiple selections allowed)
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/navigation.js"></script>
+    <script src="../js/polls-data.js"></script>
+    <script>
+        function loadPolls() {
+            const polls = getPolls().filter(p => p.isActive);
+            const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+            const userId = currentUser.email || 'anonymous';
+            
+            const pollsContainer = document.querySelector('.card:last-child');
+            const pollsHTML = polls.map(poll => {
+                const hasVoted = hasUserVoted(poll.id, userId);
+                const userVote = getUserVote(poll.id, userId);
+                const daysLeft = Math.ceil((new Date(poll.expiresAt) - new Date()) / (1000 * 60 * 60 * 24));
+                
+                return `
+                    <div class="poll-item">
+                        <div class="poll-title">${poll.question}</div>
+                        <div class="poll-meta">Category: ${poll.category} • ${poll.totalVotes} votes • ${poll.allowMultiple ? 'Multiple selections allowed • ' : ''}Expires in ${daysLeft} days</div>
+                        
+                        ${poll.options.map((option, index) => {
+                            const percentage = poll.totalVotes > 0 ? Math.round((poll.votes[index] / poll.totalVotes) * 100) : 0;
+                            const isUserVote = hasVoted && (poll.allowMultiple ? userVote?.includes(index) : userVote === index);
+                            
+                            return `
+                                <button class="poll-option ${isUserVote ? 'voted' : ''}" onclick="vote(${poll.id}, ${index})" ${hasVoted && !poll.allowMultiple ? 'disabled' : ''}>
+                                    <div class="progress" style="width: ${percentage}%"></div>
+                                    <div class="text">
+                                        <span>${option} ${isUserVote ? '✓' : ''}</span>
+                                        <span>${poll.votes[index]} votes (${percentage}%)</span>
+                                    </div>
+                                </button>
+                            `;
+                        }).join('')}
+                        
+                        <div class="poll-status">
+                            ${hasVoted ? '✅ You have voted in this poll' : '🗳️ Click an option to vote'}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            pollsContainer.innerHTML = '<h3>Active Polls</h3>' + pollsHTML;
+            
+            // Update participation stats
+            const participatedCount = polls.filter(p => hasUserVoted(p.id, userId)).length;
+            document.getElementById('participatedPolls').textContent = participatedCount;
+        }
+        
+        function vote(pollId, optionIndex) {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+            const userId = currentUser.email || 'anonymous';
+            
+            if (voteOnPoll(pollId, optionIndex, userId)) {
+                loadPolls();
+                alert('Vote recorded successfully!');
+            } else {
+                alert('Unable to vote. You may have already voted on this poll.');
+            }
+        }
+        
+        // Load polls on page load
+        document.addEventListener('DOMContentLoaded', loadPolls);
+    </script>
+</body>
+</html>

@@ -1,0 +1,389 @@
+/* ===== EXTRA ENHANCED ANIMATIONS FOR CAMPUSLINK ===== */
+
+/* Particle Background Animation */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px, rgba(63, 81, 181, 0.3), transparent),
+    radial-gradient(2px 2px at 40px 70px, rgba(102, 126, 234, 0.2), transparent),
+    radial-gradient(1px 1px at 90px 40px, rgba(118, 75, 162, 0.3), transparent),
+    radial-gradient(1px 1px at 130px 80px, rgba(63, 81, 181, 0.2), transparent);
+  background-size: 200px 200px;
+  animation: particleFloat 20s linear infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+@keyframes particleFloat {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-10px, -10px); }
+  50% { transform: translate(10px, -20px); }
+  75% { transform: translate(-5px, -10px); }
+  100% { transform: translate(0, 0); }
+}
+
+/* Enhanced Container Animations */
+.container {
+  animation: containerEntrance 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes containerEntrance {
+  0% {
+    opacity: 0;
+    transform: scale(0.3) rotate(-10deg);
+    filter: blur(10px);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.1) rotate(2deg);
+    filter: blur(2px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+    filter: blur(0px);
+  }
+}
+
+/* Magnetic Button Effect */
+.button, .nav-btn, button {
+  position: relative;
+  overflow: hidden;
+}
+
+.button::before, .nav-btn::before, button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, transparent 70%);
+  transition: all 0.5s ease;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+}
+
+.button:hover::before, .nav-btn:hover::before, button:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* Text Reveal Animation */
+.text-reveal {
+  overflow: hidden;
+  position: relative;
+}
+
+.text-reveal::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, #3f51b5, transparent);
+  transform: translateX(-100%);
+  animation: textReveal 2s ease-in-out;
+}
+
+@keyframes textReveal {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(0%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Morphing Shapes */
+.morphing-bg {
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, 
+    rgba(63, 81, 181, 0.1) 0%, 
+    rgba(102, 126, 234, 0.1) 25%,
+    rgba(118, 75, 162, 0.1) 50%,
+    rgba(63, 81, 181, 0.1) 75%,
+    rgba(102, 126, 234, 0.1) 100%);
+  animation: morphingShapes 15s ease-in-out infinite;
+  pointer-events: none;
+  z-index: -2;
+}
+
+@keyframes morphingShapes {
+  0%, 100% { 
+    transform: rotate(0deg) scale(1);
+    border-radius: 0%;
+  }
+  25% { 
+    transform: rotate(90deg) scale(1.1);
+    border-radius: 25%;
+  }
+  50% { 
+    transform: rotate(180deg) scale(0.9);
+    border-radius: 50%;
+  }
+  75% { 
+    transform: rotate(270deg) scale(1.05);
+    border-radius: 25%;
+  }
+}
+
+/* Enhanced Card Animations */
+.post, .feed-item, .nav-btn {
+  animation: cardMagicEntrance 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes cardMagicEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(100px) rotateX(-90deg) scale(0.5);
+    filter: blur(20px);
+  }
+  50% {
+    opacity: 0.7;
+    transform: translateY(-10px) rotateX(10deg) scale(1.1);
+    filter: blur(5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg) scale(1);
+    filter: blur(0px);
+  }
+}
+
+/* Glitch Effect for Titles */
+.glitch-title {
+  position: relative;
+  animation: glitchTitle 3s infinite;
+}
+
+.glitch-title::before,
+.glitch-title::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch-title::before {
+  animation: glitchBefore 3s infinite;
+  color: #ff0000;
+  z-index: -1;
+}
+
+.glitch-title::after {
+  animation: glitchAfter 3s infinite;
+  color: #00ff00;
+  z-index: -2;
+}
+
+@keyframes glitchTitle {
+  0%, 90%, 100% { transform: translate(0); }
+  10% { transform: translate(-2px, -1px); }
+  20% { transform: translate(2px, 1px); }
+  30% { transform: translate(-1px, 2px); }
+  40% { transform: translate(1px, -1px); }
+  50% { transform: translate(-1px, 1px); }
+  60% { transform: translate(2px, -2px); }
+  70% { transform: translate(-2px, 2px); }
+  80% { transform: translate(1px, -2px); }
+}
+
+@keyframes glitchBefore {
+  0%, 90%, 100% { transform: translate(0); }
+  10% { transform: translate(2px, 1px); }
+  20% { transform: translate(-2px, -1px); }
+  30% { transform: translate(1px, -2px); }
+  40% { transform: translate(-1px, 1px); }
+  50% { transform: translate(1px, -1px); }
+  60% { transform: translate(-2px, 2px); }
+  70% { transform: translate(2px, -2px); }
+  80% { transform: translate(-1px, 2px); }
+}
+
+@keyframes glitchAfter {
+  0%, 90%, 100% { transform: translate(0); }
+  10% { transform: translate(-2px, -1px); }
+  20% { transform: translate(2px, 1px); }
+  30% { transform: translate(-1px, 2px); }
+  40% { transform: translate(1px, -1px); }
+  50% { transform: translate(-1px, 1px); }
+  60% { transform: translate(2px, -2px); }
+  70% { transform: translate(-2px, 2px); }
+  80% { transform: translate(1px, -2px); }
+}
+
+/* Liquid Button Effect */
+.liquid-btn {
+  position: relative;
+  overflow: hidden;
+  border-radius: 50px;
+}
+
+.liquid-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  transition: left 0.5s;
+}
+
+.liquid-btn:hover::before {
+  left: 100%;
+}
+
+.liquid-btn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255,255,255,0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.3s ease;
+}
+
+.liquid-btn:active::after {
+  width: 300px;
+  height: 300px;
+}
+
+/* Floating Elements */
+.float-element {
+  animation: floatUpDown 4s ease-in-out infinite;
+}
+
+@keyframes floatUpDown {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  25% { transform: translateY(-10px) rotate(1deg); }
+  50% { transform: translateY(-20px) rotate(0deg); }
+  75% { transform: translateY(-10px) rotate(-1deg); }
+}
+
+/* Neon Glow Effect */
+.neon-glow {
+  text-shadow: 
+    0 0 5px #3f51b5,
+    0 0 10px #3f51b5,
+    0 0 15px #3f51b5,
+    0 0 20px #3f51b5;
+  animation: neonPulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes neonPulse {
+  from {
+    text-shadow: 
+      0 0 5px #3f51b5,
+      0 0 10px #3f51b5,
+      0 0 15px #3f51b5,
+      0 0 20px #3f51b5;
+  }
+  to {
+    text-shadow: 
+      0 0 2px #3f51b5,
+      0 0 5px #3f51b5,
+      0 0 8px #3f51b5,
+      0 0 12px #3f51b5,
+      0 0 15px #3f51b5;
+  }
+}
+
+/* Matrix Rain Effect */
+.matrix-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -3;
+  opacity: 0.1;
+}
+
+.matrix-bg::before {
+  content: '01010101010101010101010101010101010101010101010101010101010101010101010101010101';
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 200%;
+  color: #3f51b5;
+  font-family: monospace;
+  font-size: 12px;
+  line-height: 1.2;
+  word-wrap: break-word;
+  animation: matrixRain 10s linear infinite;
+}
+
+@keyframes matrixRain {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+/* Holographic Effect */
+.holographic {
+  background: linear-gradient(45deg, 
+    #ff0080, #ff8c00, #40e0d0, #ff0080);
+  background-size: 400% 400%;
+  animation: holographicShift 3s ease infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@keyframes holographicShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Breathing Animation */
+.breathing {
+  animation: breathe 4s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* Utility Classes */
+.animate-delay-1 { animation-delay: 0.1s; }
+.animate-delay-2 { animation-delay: 0.2s; }
+.animate-delay-3 { animation-delay: 0.3s; }
+.animate-delay-4 { animation-delay: 0.4s; }
+.animate-delay-5 { animation-delay: 0.5s; }
+
+/* Enhanced Hover States */
+.enhanced-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.enhanced-hover:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(63, 81, 181, 0.3);
+  filter: brightness(1.1);
+}
+
+/* Magnetic Effect */
+.magnetic {
+  transition: transform 0.3s ease;
+}
+
+.magnetic:hover {
+  transform: translate(var(--x, 0), var(--y, 0)) scale(1.05);
+}

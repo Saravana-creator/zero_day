@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CampusLink - Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles/style.css" />
+  <link rel="stylesheet" href="styles/animations.css" />
+  <link rel="stylesheet" href="styles/enhanced-animations.css" />
+  <link rel="stylesheet" href="styles/visual-effects.css" />
+  <link rel="stylesheet" href="styles/navigation.css" />
+</head>
+<body>
+
+  <div class="container shadow-soft floating">
+    <h1 class="breathe">🔐 CampusLink Login</h1>
+    <p class="subtitle">Sign in to access your campus portal</p>
+    <form id="loginForm">
+      <label for="email">Email:</label>
+      <input type="email" id="email" placeholder="Enter your email" required class="hover-lift" />
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" placeholder="Enter your password" required class="hover-lift" />
+
+      <label for="role">Login as:</label>
+      <select id="role" required class="hover-lift">
+        <option value="student" id="student">Student</option>
+        <option value="admin" id="admin">Admin</option>
+      </select>
+
+      <div class="remember-me-container">
+        <input type="checkbox" id="rememberMe" class="remember-checkbox">
+        <label for="rememberMe" class="remember-label">Remember Me</label>
+      </div>
+
+      <button type="submit" class="button hover-lift-3d ripple">Login</button>
+    </form>
+    <div class="bottom-text">
+      Don't have an account? <a href="signup.html" class="hover-glow">Sign up here</a>
+    </div>
+  </div>
+
+  <script>
+    // Load saved credentials on page load
+    window.addEventListener('load', function() {
+      const savedEmail = localStorage.getItem('rememberedEmail');
+      const savedPassword = localStorage.getItem('rememberedPassword');
+      const savedRole = localStorage.getItem('rememberedRole');
+      
+      if (savedEmail && savedPassword && savedRole) {
+        document.getElementById('email').value = savedEmail;
+        document.getElementById('password').value = savedPassword;
+        document.getElementById('role').value = savedRole;
+        document.getElementById('rememberMe').checked = true;
+      }
+    });
+
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const role = document.getElementById('role').value;
+      const rememberMe = document.getElementById('rememberMe').checked;
+
+      try {
+        // Try database authentication first
+        const response = await fetch('http://localhost:5000/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password, role })
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          
+          // Store token and user info
+          localStorage.setItem('authToken', data.token);
+          localStorage.setItem('currentUser', JSON.stringify(data.user));
+
+          // Handle Remember Me functionality
+          if (rememberMe) {
+            localStorage.setItem('rememberedEmail', email);
+            localStorage.setItem('rememberedPassword', password);
+            localStorage.setItem('rememberedRole', data.user.role);
+          } else {
+            localStorage.removeItem('rememberedEmail');
+            localStorage.removeItem('rememberedPassword');
+            localStorage.removeItem('rememberedRole');
+          }
+
+          // Add disappearing animation before redirect
+          document.body.style.animation = 'disappear 1s ease-in-out forwards';
+          
+          setTimeout(() => {
+            if (data.user.role === 'admin') {
+              window.location.href = 'admin/admin_home.html';
+            } else {
+              window.location.href = 'student/student_home.html';
+            }
+          }, 1000);
+        } else {
+          const data = await response.json();
+          
+          console.log('Response status:', response.status);
+          console.log('Response data:', data);
+          
+          // Check for wrong role error (403 status)
+          if (response.status === 403 && data.wrongRole) {
+            // Also show alert as backup
+            alert(`❌ WRONG ROLE!\n\n${data.message}\n\nYou are registered as: ${data.registeredAs.toUpperCase()}`);
+            
+            // Create custom popup for wrong role
+            const popup = document.createElement('div');
+            popup.style.cssText = `
+              position: fixed;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              background: #ff4444;
+              color: white;
+              padding: 20px;
+              border-radius: 10px;
+              box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+              z-index: 10000;
+              text-align: center;
+              font-family: Arial, sans-serif;
+              max-width: 400px;
+            `;
+            
+            popup.innerHTML = `
+              <h3>❌ WRONG ROLE SELECTED!</h3>
+              <p>${data.message}</p>
+              <p><strong>You are registered as: ${data.registeredAs.toUpperCase()}</strong></p>
+              <button onclick="this.parentElement.remove()" style="
+                background: white;
+                color: #ff4444;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+                margin-top: 10px;
+              ">OK</button>
+            `;
+            
+            document.body.appendChild(popup);
+            
+            // Auto-correct the role dropdown
+            document.getElementById('role').value = data.registeredAs;
+            
+            // Highlight the role field
+            const roleField = document.getElementById('role');
+            roleField.style.border = '3px solid red';
+            roleField.style.backgroundColor = '#ffe6e6';
+            
+            setTimeout(() => {
+              roleField.style.border = '';
+              roleField.style.backgroundColor = '';
+            }, 5000);
+            
+            // Remove popup after 5 seconds
+            setTimeout(() => {
+              if (popup.parentElement) {
+                popup.remove();
+              }
+            }, 5000);
+            
+          } else {
+            alert(data.message || 'Login failed');
+          }
+        }
+      } catch (error) {
+        console.error('Login error:', error);
+        alert('Login failed. Please check your connection and try again.');
+      }
+    });
+  </script>
+  <script src="js/visual-effects.js"></script>
+  <script src="js/navigation.js"></script>
+  
+  <style>
+    @keyframes disappear {
+      0% { 
+        opacity: 1; 
+        transform: scale(1) rotate(0deg); 
+        filter: blur(0px);
+      }
+      50% {
+        opacity: 0.5;
+        transform: scale(0.8) rotate(5deg);
+        filter: blur(2px);
+      }
+      100% { 
+        opacity: 0; 
+        transform: scale(0.3) rotate(10deg); 
+        filter: blur(10px);
+      }
+    }
+  </style>
+
+</body>
+</html>

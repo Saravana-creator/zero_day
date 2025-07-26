@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student - Campus Announcements</title>
+    <link rel="stylesheet" href="../styles/campus_announce_style.css">
+    <link rel="stylesheet" href="../styles/navigation.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-top">
+                <a href="student_home.html" class="home-btn">🏠 Home</a>
+                <h1>Campus Announcements</h1>
+                <button class="profile-btn" onclick="showProfile()">👤 Profile</button>
+            </div>
+        </header>
+
+        <!-- Student View Only -->
+        <div class="student-section">
+            <div class="filters">
+                <label for="categoryFilter">Filter by Category:</label>
+                <select id="categoryFilter">
+                    <option value="">All Categories</option>
+                </select>
+                <div class="filter-stats" id="filterStats">
+                    Total: 0 announcements
+                </div>
+            </div>
+
+            <table id="announcements" class="announcements-table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Admin</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Task Detail Modal -->
+    <div id="taskModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle"></h2>
+            <div class="modal-info">
+                <span id="modalCategory" class="category-badge"></span>
+                <span id="modalAdmin"></span>
+                <span id="modalDate"></span>
+            </div>
+            <div id="modalContent" class="modal-description"></div>
+            <div id="modalImages" class="modal-images"></div>
+        </div>
+    </div>
+
+    <!-- Hidden elements for JS compatibility -->
+    <div id="adminPanel" class="hidden">
+        <div id="adminLoginSection" class="hidden"></div>
+        <div id="adminFormSection" class="hidden">
+            <form id="announcementForm">
+                <input id="title">
+                <textarea id="content"></textarea>
+                <select id="category"></select>
+                <input id="adminName">
+            </form>
+        </div>
+    </div>
+    <div id="adminManagement" class="hidden"></div>
+    <table id="adminTable" class="hidden">
+        <tbody></tbody>
+    </table>
+    <div id="profileSidebar" class="hidden"></div>
+    <div id="sidebarOverlay" class="hidden"></div>
+    <div id="imageUpload" class="hidden">
+        <input id="imageInput" type="file">
+        <button id="browseImages"></button>
+        <div id="imagePreview"></div>
+    </div>
+    <button id="toggleAdmin" class="hidden"></button>
+    <button id="toggleManage" class="hidden"></button>
+    <button id="toggleProfile" class="hidden"></button>
+
+    <script src="../js/profile-manager.js"></script>
+    <script src="../js/navigation.js"></script>
+    <script src="../js/campus_script.js"></script>
+</body>
+</html>

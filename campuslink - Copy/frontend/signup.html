@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CampusLink - Signup</title>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles/style.css" />
+<link rel="stylesheet" href="styles/navigation.css" />
+
+</head>
+<body>
+
+  <div class="container">
+    <h1>🎓 CampusLink Signup</h1>
+    <p class="subtitle">Create your campus portal account</p>
+    <form id="signupForm">
+      <label for="name">Full Name:</label>
+      <input type="text" id="name" placeholder="Enter your full name" required />
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" placeholder="Enter your email" required />
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" placeholder="Create a password" required />
+
+      <label for="role">Signup as:</label>
+      <select id="role" required>
+        <option value="student">Student</option>
+        <option value="admin">Admin</option>
+      </select>
+
+      <button type="submit" class="button">Sign Up</button>
+    </form>
+    <div class="bottom-text">
+      Already have an account? <a href="login.html">Login here</a>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('signupForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const role = document.getElementById('role').value;
+
+      console.log('Submitting registration:', { name, email, role });
+      
+      try {
+        const response = await fetch('http://localhost:5000/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, password, role })
+        });
+
+        console.log('Response status:', response.status);
+        const data = await response.json();
+        console.log('Response data:', data);
+
+        if (response.ok) {
+          alert('Registration successful!');
+          
+          // Store token and user info
+          localStorage.setItem('authToken', data.token);
+          localStorage.setItem('currentUser', JSON.stringify(data.user));
+
+          // Redirect to appropriate dashboard
+          if (data.user.role === 'admin') {
+            window.location.href = 'admin/admin_home.html';
+          } else {
+            window.location.href = 'student/student_home.html';
+          }
+        } else {
+          alert(data.message || 'Registration failed');
+        }
+      } catch (error) {
+        console.error('Registration error:', error);
+        alert('Registration failed. Server may be down. Error: ' + error.message);
+      }
+    });
+  </script>
+  <script src="js/navigation.js"></script>
+
+</body>
+</html>

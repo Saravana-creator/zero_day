@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Tech News & Opportunities Management</title>
+    <link rel="stylesheet" href="../styles/tech_feed.css">
+    <link rel="stylesheet" href="../styles/navigation.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-top">
+                <a href="admin_home.html" class="home-btn">🏠 Home</a>
+                <h1>🚀 Admin - Tech News & Opportunities</h1>
+                <div></div>
+            </div>
+            <div class="filter-tabs">
+                <button class="tab-btn active" data-filter="all">All</button>
+                <button class="tab-btn" data-filter="hackathons">🏆 Hackathons</button>
+                <button class="tab-btn" data-filter="internships">💼 Internships</button>
+                <button class="tab-btn" data-filter="news">📰 Tech News</button>
+            </div>
+        </header>
+
+        <div class="feed-container" id="feedContainer">
+            <!-- Feed items will be loaded here -->
+        </div>
+
+        <div class="add-opportunity">
+            <button id="addBtn" class="add-btn">+ Add Opportunity</button>
+        </div>
+    </div>
+
+    <!-- Add Opportunity Modal -->
+    <div id="addModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Add New Opportunity</h2>
+            <form id="opportunityForm">
+                <select id="type" required>
+                    <option value="">Select Type</option>
+                    <option value="hackathons">Hackathon</option>
+                    <option value="internships">Internship</option>
+                    <option value="news">Tech News</option>
+                </select>
+                <input type="text" id="title" placeholder="Title" required>
+                <input type="text" id="company" placeholder="Company/Organization">
+                <textarea id="description" placeholder="Description" required></textarea>
+                <input type="url" id="link" placeholder="Application/Read More Link">
+                <input type="date" id="deadline" placeholder="Deadline (if applicable)">
+                <button type="submit">Add Opportunity</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/navigation.js"></script>
+    <script src="../js/tech_feed.js"></script>
+</body>
+</html>

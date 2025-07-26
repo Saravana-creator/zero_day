@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Login</title>
+</head>
+<body>
+    <h2>Test Login Form</h2>
+    <form id="testForm">
+        <input type="email" id="email" placeholder="Email" required><br><br>
+        <input type="password" id="password" placeholder="Password" required><br><br>
+        <select id="role" required>
+            <option value="student">Student</option>
+            <option value="admin">Admin</option>
+        </select><br><br>
+        <button type="submit">Login</button>
+    </form>
+
+    <script>
+        document.getElementById('testForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const role = document.getElementById('role').value;
+
+            try {
+                const response = await fetch('http://localhost:5000/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password, role })
+                });
+
+                const data = await response.json();
+                console.log('Status:', response.status);
+                console.log('Data:', data);
+
+                if (response.ok) {
+                    alert('Login successful!');
+                } else if (response.status === 403 && data.wrongRole) {
+                    alert(`❌ WRONG ROLE!\n\n${data.message}\n\nYou are registered as: ${data.registeredAs.toUpperCase()}`);
+                    document.getElementById('role').value = data.registeredAs;
+                } else {
+                    alert(data.message || 'Login failed');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Connection error');
+            }
+        });
+    </script>
+</body>
+</html>

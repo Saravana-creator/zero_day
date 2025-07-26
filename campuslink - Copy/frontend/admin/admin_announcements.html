@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Campus Announcements</title>
+    <link rel="stylesheet" href="../styles/campus_announce_style.css">
+    <link rel="stylesheet" href="../styles/navigation.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-top">
+                <a href="admin_home.html" class="home-btn">🏠 Home</a>
+                <h1>Admin - Campus Announcements</h1>
+                <div></div>
+            </div>
+        </header>
+
+        <!-- Create Announcement Form -->
+        <div class="admin-panel">
+            <div class="admin-form-section">
+                <div class="admin-header">
+                    <h2>Post New Announcement</h2>
+                    <button id="toggleProfile" class="profile-btn-small">Profile</button>
+                </div>
+                <form id="announcementForm">
+                <input type="text" id="title" placeholder="Title" required>
+                <select id="category" required>
+                    <option value="">Select Category</option>
+                    <option value="Events">Events</option>
+                    <option value="Exams">Exams</option>
+                    <option value="Holidays">Holidays</option>
+                    <option value="General">General</option>
+                </select>
+                <input type="text" id="adminName" placeholder="Admin Name" required>
+                <textarea id="content" placeholder="Announcement content" required></textarea>
+                <div id="imageUpload" class="image-upload">
+                    <p>Drag & drop images here or paste from clipboard</p>
+                    <input type="file" id="imageInput" accept="image/*" multiple hidden>
+                    <button type="button" id="browseImages">Browse Images</button>
+                    <div id="imagePreview" class="image-preview"></div>
+                </div>
+                <button type="submit">Post Announcement</button>
+            </form>
+            </div>
+        </div>
+
+        <!-- Manage Announcements Table -->
+        <div class="admin-panel">
+            <h2>Manage Announcements</h2>
+            <table id="adminTable" class="announcements-table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Admin</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Task Detail Modal -->
+    <div id="taskModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle"></h2>
+            <div class="modal-info">
+                <span id="modalCategory" class="category-badge"></span>
+                <span id="modalAdmin"></span>
+                <span id="modalDate"></span>
+            </div>
+            <div id="modalContent" class="modal-description"></div>
+            <div id="modalImages" class="modal-images"></div>
+        </div>
+    </div>
+
+    <!-- Profile Sidebar -->
+    <div id="profileSidebar" class="profile-sidebar hidden">
+        <div class="sidebar-header">
+            <button id="closeSidebar" class="close-btn">&times;</button>
+            <h2>Admin Profile</h2>
+        </div>
+        <div class="sidebar-content">
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    <div class="avatar-circle">A</div>
+                </div>
+                <div class="profile-details">
+                    <h3 id="profileName">Administrator</h3>
+                    <p class="profile-role">System Administrator</p>
+                    <p class="profile-status">Active</p>
+                </div>
+            </div>
+            <div class="profile-section">
+                <h4>Account</h4>
+                <div class="info-list">
+                    <div class="info-item">
+                        <label>Username:</label>
+                        <span id="profileUsername">admin</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Email:</label>
+                        <span id="profileEmail">admin@campus.edu</span>
+                    </div>
+                    <button id="editProfileBtn" class="sidebar-btn primary">Edit Profile</button>
+                </div>
+            </div>
+            <div class="profile-section">
+                <h4>Statistics</h4>
+                <div class="stats-list">
+                    <div class="stat-item">
+                        <span class="stat-number" id="totalPosts">0</span>
+                        <span class="stat-label">Total Posts</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="thisMonth">0</span>
+                        <span class="stat-label">This Month</span>
+                    </div>
+                </div>
+            </div>
+            <div class="profile-section">
+                <h4>Security</h4>
+                <div class="security-options">
+                    <button id="changePasswordBtn" class="sidebar-btn primary">Change Password</button>
+                    <button id="logoutBtn" class="sidebar-btn secondary">Logout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="sidebarOverlay" class="sidebar-overlay hidden"></div>
+    
+    <!-- Hidden elements for JS compatibility -->
+    <div id="adminLoginSection" class="hidden"></div>
+    <div id="adminPanel" class="hidden"></div>
+    <div id="adminManagement" class="hidden"></div>
+    <table id="announcements" class="hidden">
+        <tbody></tbody>
+    </table>
+    <select id="categoryFilter" class="hidden"></select>
+    <div id="filterStats" class="hidden"></div>
+    <button id="toggleAdmin" class="hidden"></button>
+    <button id="toggleManage" class="hidden"></button>
+
+    <script src="../js/navigation.js"></script>
+    <script src="../js/campus_script.js"></script>
+    <script>
+        function refreshAdminTable() {
+            const announcements = JSON.parse(localStorage.getItem('announcements') || '[]');
+            const tbody = document.getElementById('adminTable').querySelector('tbody');
+            tbody.innerHTML = '';
+            
+            announcements.forEach((announcement, index) => {
+                const date = new Date(announcement.date_posted).toLocaleDateString();
+                const categoryClass = `category-${announcement.category.toLowerCase()}`;
+                const timeAgo = date;
+                
+                const row = `
+                    <tr>
+                        <td class="title">${announcement.title}</td>
+                        <td><span class="category-badge ${categoryClass}">${announcement.category}</span></td>
+                        <td style="font-weight: 600; color: #3949ab;">${announcement.admin_name}</td>
+                        <td style="color: #666;">${timeAgo}</td>
+                        <td>
+                            <button class="edit-btn" data-id="${announcement.id}">Edit</button>
+                            <button class="delete-btn" data-id="${announcement.id}">Delete</button>
+                        </td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+        }
+
+        // Auto-load admin table when page loads
+        window.addEventListener('load', function() {
+            setTimeout(refreshAdminTable, 500);
+        });
+
+        // Override the original form submission to refresh table
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('announcementForm');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    // Let the original handler run first
+                    setTimeout(() => {
+                        refreshAdminTable();
+                    }, 100);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

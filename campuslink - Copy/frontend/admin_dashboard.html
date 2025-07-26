@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CampusLink - Admin Dashboard</title>
+  <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🔧 Admin Dashboard</h1>
+    <p class="subtitle">Manage campus portal and announcements</p>
+
+    <div class="nav-grid">
+      <a href="camp_announce.html" class="nav-btn">📢 Manage Announcements</a>
+      <a href="view.html" class="nav-btn">🔍 View Lost & Found Items</a>
+      <a href="complaint.html" class="nav-btn">🏠 Manage Complaints</a>
+      <a href="tech_feed.html" class="nav-btn">🚀 Tech News & Opportunities</a>
+      <a href="login.html" class="nav-btn" style="background-color: #dc3545;">🚪 Logout</a>
+    </div>
+  </div>
+
+  <style>
+    /* Add-on styles for grid layout */
+    .container {
+      text-align: center;
+      padding: 50px 20px;
+    }
+
+    .nav-grid {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      max-width: 800px;
+      margin: 30px auto;
+    }
+
+    .nav-btn {
+      display: block;
+      padding: 15px 20px;
+      background-color: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+
+    .nav-btn:hover {
+      background-color: #0056b3;
+      transform: scale(1.05);
+      color: white;
+    }
+  </style>
+</body>
+</html>

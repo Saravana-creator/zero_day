@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SkillShare - Connect with experts and learners worldwide. Share your skills or learn new ones through live interactive sessions.">
+    <meta name="keywords" content="online learning, skill sharing, live sessions, education, teaching, learning platform">
+    <title>CampusLink - Meeting Platform</title>
+    <link rel="stylesheet" href="styles/stylemeet.css">
+    <link rel="stylesheet" href="styles/navigation.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <div class="brand-logo">🎓</div>
+                <div class="brand-text">
+                    <h1>CampusLink</h1>
+                    <span class="brand-tagline">Meeting Platform</span>
+                </div>
+            </div>
+            <div class="nav-menu" id="navMenu">
+                <div class="auth-buttons" id="authButtons">
+                    <button class="btn btn-outline" id="loginBtn">🔐 Login</button>
+                    <button class="btn btn-gradient" id="registerBtn">✨ Join Now</button>
+                </div>
+                <div class="user-menu" id="userMenu">
+                    <div class="professional-profile-dropdown">
+                        <button class="profile-trigger-pro" id="profileTrigger">
+                            <div class="user-avatar-pro">
+                                <span class="avatar-initial" id="userInitial">U</span>
+                            </div>
+                            <div class="user-info">
+                                <span class="user-name" id="userName"></span>
+                                <span class="user-role">Member</span>
+                            </div>
+                            <div class="dropdown-chevron">⌄</div>
+                        </button>
+                        <div class="profile-dropdown-pro hidden" id="profileDropdown">
+                            <div class="dropdown-header">
+                                <div class="user-avatar-large">
+                                    <span class="avatar-initial-large" id="userInitialLarge">U</span>
+                                </div>
+                                <div class="user-details">
+                                    <h4 class="user-full-name" id="profileName"></h4>
+                                    <p class="user-email" id="profileEmail"></p>
+                                    <span class="user-status">Active Member</span>
+                                </div>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <div class="dropdown-menu">
+                                <button class="menu-item" id="editProfileBtn">
+                                    <div class="menu-icon">👤</div>
+                                    <div class="menu-content">
+                                        <span class="menu-title">Account Settings</span>
+                                        <span class="menu-subtitle">Manage your profile</span>
+                                    </div>
+                                </button>
+                                <button class="menu-item" id="changePasswordBtn">
+                                    <div class="menu-icon">🔐</div>
+                                    <div class="menu-content">
+                                        <span class="menu-title">Security</span>
+                                        <span class="menu-subtitle">Change password</span>
+                                    </div>
+                                </button>
+                                <div class="menu-divider"></div>
+                                <button class="menu-item logout-item" id="logoutBtn">
+                                    <div class="menu-icon">🚪</div>
+                                    <div class="menu-content">
+                                        <span class="menu-title">Sign Out</span>
+                                        <span class="menu-subtitle">End your session</span>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main">
+
+
+        <!-- Auth Modal -->
+        <div class="modal" id="authModal">
+            <div class="modal-content">
+                <span class="close" id="closeModal">&times;</span>
+                
+                <!-- Login Form -->
+                <div class="auth-form" id="loginForm">
+                    <div class="auth-header">
+                        <div class="auth-icon">🔐</div>
+                        <h2>Welcome Back!</h2>
+                        <p>Sign in to continue your learning journey</p>
+                    </div>
+                    <form id="loginFormElement">
+                        <div class="form-group">
+                            <label for="loginEmail">📧 Email Address</label>
+                            <input type="email" id="loginEmail" placeholder="Enter your email" required autocomplete="email" aria-describedby="loginEmailHelp">
+                            <small id="loginEmailHelp" class="form-help">We'll never share your email with anyone else.</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">🔒 Password</label>
+                            <div class="password-input-container">
+                                <input type="password" id="loginPassword" placeholder="Enter your password" required autocomplete="current-password">
+                                <button type="button" class="password-toggle" onclick="togglePassword('loginPassword')" aria-label="Toggle password visibility">
+                                    <span class="password-toggle-icon">👁️</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="remember-me-label">
+                                <input type="checkbox" id="rememberMe">
+                                <span class="checkmark"></span>
+                                <span class="remember-text">Remember me</span>
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-gradient btn-full">
+                            <span class="btn-icon">🚀</span>
+                            Sign In
+                        </button>
+                    </form>
+                    <p class="auth-switch">New to SkillShare? <a href="#" id="showRegister">Create Account</a></p>
+                </div>
+
+                <!-- Register Form -->
+                <div class="auth-form hidden" id="registerForm">
+                    <div class="auth-header">
+                        <div class="auth-icon">✨</div>
+                        <h2>Join CampusLink!</h2>
+                        <p>Connect with your campus community today</p>
+                    </div>
+                    <form id="registerFormElement">
+                        <div class="form-group">
+                            <label for="registerName">👤 Full Name</label>
+                            <input type="text" id="registerName" placeholder="Enter your full name" required autocomplete="name" minlength="2">
+                        </div>
+                        <div class="form-group">
+                            <label for="registerEmail">📧 Email Address</label>
+                            <input type="email" id="registerEmail" placeholder="Enter your email" required autocomplete="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="registerPassword">🔒 Password</label>
+                            <div class="password-input-container">
+                                <input type="password" id="registerPassword" placeholder="Create a strong password" required autocomplete="new-password" minlength="6">
+                                <button type="button" class="password-toggle" onclick="togglePassword('registerPassword')" aria-label="Toggle password visibility">
+                                    <span class="password-toggle-icon">👁️</span>
+                                </button>
+                            </div>
+                            <div class="password-strength" id="passwordStrength"></div>
+                            <small class="form-help">Password must be at least 6 characters long</small>
+                        </div>
+                        <div class="form-group">
+                            <label class="terms-label">
+                                <input type="checkbox" id="agreeTerms" required>
+                                <span class="checkmark"></span>
+                                <span class="terms-text">I agree to the <a href="#" onclick="showTerms()">Terms of Service</a> and <a href="#" onclick="showPrivacy()">Privacy Policy</a></span>
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-gradient btn-full">
+                            <span class="btn-icon">🎉</span>
+                            Create Account
+                        </button>
+                    </form>
+                    <p class="auth-switch">Already have an account? <a href="#" id="showLogin">Sign In</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard -->
+        <section class="dashboard hidden" id="dashboard">
+            <div class="container">
+                <div class="dashboard-header">
+                    <div class="dashboard-welcome">
+                        <h2>Welcome back! 👋</h2>
+                        <p>Ready to learn something new or share your expertise?</p>
+                    </div>
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="browse">
+                            <span class="tab-icon">🔍</span>
+                            <span>Browse Skills</span>
+                        </button>
+                        <button class="tab-btn" data-tab="create">
+                            <span class="tab-icon">✨</span>
+                            <span>Add Skills</span>
+                        </button>
+                        <button class="tab-btn" data-tab="my-skills">
+                            <span class="tab-icon">📚</span>
+                            <span>My Skills</span>
+                        </button>
+                        <button class="tab-btn" data-tab="sessions">
+                            <span class="tab-icon">🎥</span>
+                            <span>Live Sessions</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Browse Skills Tab -->
+                <div class="tab-content active" id="browseTab">
+                    <div class="browse-header">
+                        <h3>🌟 Discover Amazing Skills</h3>
+                        <p>Find the perfect learning opportunity from our community of experts</p>
+                    </div>
+                    <div class="filters-container">
+                        <div class="filters">
+                            <div class="filter-group">
+                                <label for="categoryFilter">🏷 Category</label>
+                                <select id="categoryFilter">
+                                    <option value="">All Categories</option>
+                                    <option value="Technology">💻 Technology</option>
+                                    <option value="Design">🎨 Design</option>
+                                    <option value="Business">💼 Business</option>
+                                    <option value="Arts">🎭 Arts</option>
+                                    <option value="Language">🗣 Language</option>
+                                    <option value="Other">📋 Other</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label for="levelFilter">📊 Level</label>
+                                <select id="levelFilter">
+                                    <option value="">All Levels</option>
+                                    <option value="Beginner">🌱 Beginner</option>
+                                    <option value="Intermediate">🌿 Intermediate</option>
+                                    <option value="Advanced">🌳 Advanced</option>
+                                </select>
+                            </div>
+                            <div class="filter-group search-container">
+                                <label for="searchInput">🔍 Search</label>
+                                <input type="text" id="searchInput" placeholder="What would you like to learn today?">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="browse-controls">
+                        <div class="skills-count" id="skillsCount"></div>
+                        <div class="view-controls">
+                            <button class="view-btn active" data-view="grid" title="Grid view">
+                                <span>⊞</span>
+                            </button>
+                            <button class="view-btn" data-view="list" title="List view">
+                                <span>☰</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="skills-container">
+                        <div class="skills-grid" id="skillsGrid">
+                            <!-- Skills will be loaded here -->
+                        </div>
+                        <div class="no-results hidden" id="noResults">
+                            <div class="no-results-icon">🔍</div>
+                            <h3>No skills found</h3>
+                            <p>Try adjusting your filters or search terms</p>
+                            <button class="btn btn-outline" onclick="clearFilters()">Clear Filters</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Create Skill Tab -->
+                <div class="tab-content" id="createTab">
+                    <div class="create-skill-header">
+                        <div class="create-icon">🎓</div>
+                        <div>
+                            <h3>✨ Add Your Skills</h3>
+                            <p class="create-subtitle">Showcase your expertise and let others know what you can teach!</p>
+                        </div>
+                    </div>
+                    <div class="create-form-container">
+                        <form id="createSkillForm" class="create-form">
+                            <div class="form-section">
+                                <h4>🎯 Your Skill</h4>
+                                <div class="form-group">
+                                    <label for="skillTitle">📚 Skill Name</label>
+                                    <input type="text" id="skillTitle" placeholder="e.g., React Development, Graphic Design, Public Speaking" required maxlength="100">
+                                    <div class="char-counter">
+                                        <span id="skillTitleCounter">0</span>/100 characters
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="skillDescription">📋 Your Experience</label>
+                                    <textarea id="skillDescription" placeholder="Describe your experience with this skill, how long you've been practicing it, and what makes you qualified to teach it..." rows="4" required maxlength="500"></textarea>
+                                    <div class="char-counter">
+                                        <span id="skillDescCounter">0</span>/500 characters
+                                    </div>
+                                    <small class="form-help">💡 Tip: Include your years of experience, certifications, and what makes you unique!</small>
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <h4>🏷 Skill Details</h4>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="skillCategory">📂 Category</label>
+                                        <select id="skillCategory" required>
+                                            <option value="">Choose category</option>
+                                            <option value="Technology">💻 Technology</option>
+                                            <option value="Design">🎨 Design</option>
+                                            <option value="Business">💼 Business</option>
+                                            <option value="Arts">🎭 Arts</option>
+                                            <option value="Language">🗣 Language</option>
+                                            <option value="Other">📋 Other</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="skillLevel">📊 Your Expertise Level</label>
+                                        <select id="skillLevel" required>
+                                            <option value="">Select your level</option>
+                                            <option value="Beginner">🌱 Beginner (Can teach basics)</option>
+                                            <option value="Intermediate">🌿 Intermediate (Good experience)</option>
+                                            <option value="Advanced">🌳 Advanced (Expert level)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-gradient btn-full">
+                                <span class="btn-icon">✨</span>
+                                Add My Skill
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- My Skills Tab -->
+                <div class="tab-content" id="mySkillsTab">
+                    <div class="my-skills-header">
+                        <div class="skills-icon">📚</div>
+                        <div>
+                            <h3>🎆 Your Teaching Portfolio</h3>
+                            <p class="skills-subtitle">Manage and track your created skills</p>
+                        </div>
+                    </div>
+                    <div class="my-skills" id="mySkillsContainer">
+                        <!-- User's skills will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Sessions Tab -->
+                <div class="tab-content" id="sessionsTab">
+                    <div class="sessions-section">
+                        <div class="session-header">
+                            <div class="session-icon">🎯</div>
+                            <div>
+                                <h3>🚀 Schedule Live Session</h3>
+                                <p class="session-subtitle">Create an engaging learning experience and connect with eager learners!</p>
+                            </div>
+                        </div>
+                        
+                        <div class="session-form-container">
+                            <form id="createSessionForm" class="session-form">
+                                <div class="form-section">
+                                    <h4>📚 Session Details</h4>
+                                    <div class="form-group">
+                                        <label for="sessionSkill">✨ Skill Name</label>
+                                        <input type="text" id="sessionSkill" placeholder="e.g., Advanced JavaScript Techniques" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-section">
+                                    <h4>📅 Schedule</h4>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="sessionDate">📆 Date</label>
+                                            <input type="date" id="sessionDate" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sessionTime">⏰ Time</label>
+                                            <input type="time" id="sessionTime" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-section">
+                                    <h4>👥 Participants & Meeting</h4>
+                                    <div class="form-group">
+                                        <label for="maxParticipants">👥 Max Participants</label>
+                                        <select id="maxParticipants" required>
+                                            <option value="">Select participant limit</option>
+                                            <option value="5">5 participants (Intimate)</option>
+                                            <option value="10">10 participants (Small Group)</option>
+                                            <option value="20">20 participants (Medium Group)</option>
+                                            <option value="30">30 participants (Large Group)</option>
+                                            <option value="50">50 participants (Workshop)</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="meetingLink">🎥 Google Meet Link</label>
+                                        <input type="url" id="meetingLink" placeholder="https://meet.google.com/xxx-xxxx-xxx" required>
+                                        <small class="form-hint">💡 Create your meeting link at <a href="https://meet.google.com" target="_blank">meet.google.com</a></small>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-gradient btn-full" id="createSessionBtn">
+                                    <span class="btn-icon">🚀</span>
+                                    Launch Session
+                                </button>
+                            </form>
+                        </div>
+                        
+                        <div class="sessions-list">
+                            <div class="sessions-list-header">
+                                <h3>📋 Your Scheduled Sessions</h3>
+                                <div class="sessions-stats" id="sessionsStats">Loading...</div>
+                            </div>
+                            <div class="sessions-filter">
+                                <select id="sessionStatusFilter">
+                                    <option value="">All Sessions</option>
+                                    <option value="upcoming">Upcoming</option>
+                                    <option value="live">Live Now</option>
+                                    <option value="completed">Completed</option>
+                                </select>
+                            </div>
+                            <div id="sessionsContainer">
+                                <!-- Sessions will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </section>
+    </main>
+
+    <!-- User Validation Modal -->
+    <div class="modal" id="userValidationModal">
+        <div class="modal-content validation-modal">
+            <span class="close" id="closeValidationModal">&times;</span>
+            <div class="validation-header">
+                <div class="validation-icon">🎯</div>
+                <h2>Almost There!</h2>
+                <p>Just confirm your details to join this amazing skill session</p>
+            </div>
+            <form id="userValidationForm">
+                <div class="form-group">
+                    <label for="confirmName">👤 Full Name</label>
+                    <input type="text" id="confirmName" placeholder="Your full name" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmEmail">📧 Email Address</label>
+                    <input type="email" id="confirmEmail" placeholder="Your email address" required>
+                </div>
+                <div class="form-group consent-group">
+                    <label class="consent-label">
+                        <input type="checkbox" id="notificationConsent" required>
+                        <span class="checkmark"></span>
+                        <span class="consent-text">🔔 I agree to receive session notifications and updates</span>
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-gradient btn-full">
+                    <span class="btn-icon">🎉</span>
+                    Join Skill Session
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div class="modal" id="editProfileModal">
+        <div class="modal-content">
+            <span class="close" id="closeEditProfileModal">&times;</span>
+            <div class="auth-header">
+                <div class="auth-icon">✏</div>
+                <h2>Edit Profile</h2>
+                <p>Update your personal information</p>
+            </div>
+            <form id="editProfileForm">
+                <div class="form-group">
+                    <label for="editName">👤 Full Name</label>
+                    <input type="text" id="editName" placeholder="Enter your full name" required>
+                </div>
+                <div class="form-group">
+                    <label for="editEmail">📧 Email Address</label>
+                    <input type="email" id="editEmail" placeholder="Enter your email" required>
+                </div>
+                <button type="submit" class="btn btn-gradient btn-full">
+                    <span class="btn-icon">✨</span>
+                    Update Profile
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Change Password Modal -->
+    <div class="modal" id="changePasswordModal">
+        <div class="modal-content">
+            <span class="close" id="closeChangePasswordModal">&times;</span>
+            <div class="auth-header">
+                <div class="auth-icon">🔒</div>
+                <h2>Change Password</h2>
+                <p>Update your account password</p>
+            </div>
+            <form id="changePasswordForm">
+                <div class="form-group">
+                    <label for="currentPassword">🔑 Current Password</label>
+                    <input type="password" id="currentPassword" placeholder="Enter current password" required>
+                </div>
+                <div class="form-group">
+                    <label for="newPassword">🔒 New Password</label>
+                    <input type="password" id="newPassword" placeholder="Enter new password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmNewPassword">🔒 Confirm New Password</label>
+                    <input type="password" id="confirmNewPassword" placeholder="Confirm new password" required>
+                </div>
+                <button type="submit" class="btn btn-gradient btn-full">
+                    <span class="btn-icon">🔄</span>
+                    Update Password
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Skill Modal -->
+    <div class="modal" id="editSkillModal">
+        <div class="modal-content">
+            <span class="close" id="closeEditSkillModal">&times;</span>
+            <div class="auth-header">
+                <div class="auth-icon">✏</div>
+                <h2>Edit Skill</h2>
+                <p>Update your skill information</p>
+            </div>
+            <form id="editSkillForm">
+                <input type="hidden" id="editSkillId">
+                <div class="form-group">
+                    <label for="editSkillTitle">🎯 Skill Title</label>
+                    <input type="text" id="editSkillTitle" placeholder="Enter skill title" required>
+                </div>
+                <div class="form-group">
+                    <label for="editSkillDescription">📋 Description</label>
+                    <textarea id="editSkillDescription" placeholder="Describe your skill" rows="4" required></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editSkillCategory">📂 Category</label>
+                        <select id="editSkillCategory" required>
+                            <option value="">Choose category</option>
+                            <option value="Technology">💻 Technology</option>
+                            <option value="Design">🎨 Design</option>
+                            <option value="Business">💼 Business</option>
+                            <option value="Arts">🎭 Arts</option>
+                            <option value="Language">🗣 Language</option>
+                            <option value="Other">📋 Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editSkillLevel">📊 Difficulty Level</label>
+                        <select id="editSkillLevel" required>
+                            <option value="">Select level</option>
+                            <option value="Beginner">🌱 Beginner</option>
+                            <option value="Intermediate">🌿 Intermediate</option>
+                            <option value="Advanced">🌳 Advanced</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-gradient btn-full">
+                    <span class="btn-icon">✨</span>
+                    Update Skill
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Help Modal -->
+    <div class="modal" id="helpModal">
+        <div class="modal-content help-modal">
+            <span class="close" id="closeHelpModal">&times;</span>
+            <div class="help-header">
+                <div class="help-icon">🎓</div>
+                <h2>How to Use SkillShare</h2>
+                <p>Your guide to getting started</p>
+            </div>
+            <div class="help-content">
+                <div class="help-section">
+                    <h3>🔍 Browse Skills</h3>
+                    <p>Discover amazing skills from our community. Use filters to find exactly what you're looking for.</p>
+                </div>
+                <div class="help-section">
+                    <h3>✨ Add Your Skills</h3>
+                    <p>Share your expertise! Add skills you can teach and connect with eager learners.</p>
+                </div>
+                <div class="help-section">
+                    <h3>🎥 Live Sessions</h3>
+                    <p>Schedule interactive learning sessions using Google Meet for real-time teaching.</p>
+                </div>
+                <div class="help-section">
+                    <h3>📚 My Skills</h3>
+                    <p>Manage your teaching portfolio. Edit, update, or remove your skills anytime.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms Modal -->
+    <div class="modal" id="termsModal">
+        <div class="modal-content terms-modal">
+            <span class="close" id="closeTermsModal">&times;</span>
+            <div class="terms-header">
+                <h2>Terms of Service</h2>
+            </div>
+            <div class="terms-content">
+                <p>By using SkillShare, you agree to:</p>
+                <ul>
+                    <li>Provide accurate information about your skills and experience</li>
+                    <li>Respect other users and maintain professional conduct</li>
+                    <li>Not share inappropriate or harmful content</li>
+                    <li>Protect the privacy of session participants</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Privacy Modal -->
+    <div class="modal" id="privacyModal">
+        <div class="modal-content privacy-modal">
+            <span class="close" id="closePrivacyModal">&times;</span>
+            <div class="privacy-header">
+                <h2>Privacy Policy</h2>
+            </div>
+            <div class="privacy-content">
+                <p>Your privacy is important to us:</p>
+                <ul>
+                    <li>We store your data locally in your browser</li>
+                    <li>No personal information is sent to external servers</li>
+                    <li>You can delete your data anytime by clearing browser storage</li>
+                    <li>Session links are only shared with participants you approve</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Help Button -->
+    <button class="floating-help-btn" id="floatingHelpBtn" title="Need help?">
+        <span>❓</span>
+    </button>
+
+    <!-- Notification Container -->
+    <div id="notificationContainer"></div>
+    
+    <!-- Loading Overlay -->
+    <div class="loading-overlay hidden" id="loadingOverlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p id="loadingText">Loading amazing content...</p>
+        </div>
+    </div>
+
+    <!-- Professional Rating Modal -->
+    <div class="modal" id="ratingModal">
+        <div class="modal-content rating-modal">
+            <div class="modal-header">
+                <h2>Evaluation & Feedback</h2>
+                <span class="close" id="closeRatingModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="rating-subject">
+                    <h3 id="ratingDescription">Please rate your experience</h3>
+                </div>
+                <form id="ratingForm">
+                    <input type="hidden" id="ratingItemId">
+                    <input type="hidden" id="ratingType">
+                    
+                    <div class="rating-section">
+                        <label class="rating-label">Overall Rating</label>
+                        <div class="professional-star-rating" id="starRating">
+                            <span class="star" data-rating="1" title="Poor">☆</span>
+                            <span class="star" data-rating="2" title="Fair">☆</span>
+                            <span class="star" data-rating="3" title="Good">☆</span>
+                            <span class="star" data-rating="4" title="Very Good">☆</span>
+                            <span class="star" data-rating="5" title="Excellent">☆</span>
+                        </div>
+                        <div class="rating-text" id="ratingText">Click to rate</div>
+                    </div>
+                    
+                    <div class="review-section">
+                        <label for="ratingComment" class="review-label">Detailed Feedback</label>
+                        <textarea id="ratingComment" placeholder="Please share your detailed feedback about the quality, content, delivery, and overall experience..." rows="5" maxlength="500" oninput="updateReviewCounter()"></textarea>
+                        <div class="review-footer">
+                            <div class="char-counter">
+                                <span id="reviewCounter">0</span>/500 characters
+                            </div>
+                            <div class="review-guidelines">
+                                <small>Please provide constructive feedback to help improve the experience</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-actions">
+                        <button type="button" class="btn btn-outline" onclick="hideModal('ratingModal')">Cancel</button>
+                        <button type="submit" class="btn btn-gradient">Submit Evaluation</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal" id="confirmModal">
+        <div class="modal-content confirm-modal">
+            <div class="confirm-header">
+                <div class="confirm-icon">⚠️</div>
+                <h3 id="confirmTitle">Confirm Action</h3>
+                <p id="confirmMessage">Are you sure you want to proceed?</p>
+            </div>
+            <div class="confirm-actions">
+                <button class="btn btn-outline" id="confirmCancel">Cancel</button>
+                <button class="btn btn-gradient" id="confirmOk">Confirm</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/navigation.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

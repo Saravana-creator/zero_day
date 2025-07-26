@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CampusLink - Admin Home</title>
+  <link rel="stylesheet" href="../styles/style.css">
+  <link rel="stylesheet" href="../styles/navigation.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🔧 Admin Portal</h1>
+    <p>Administrative control panel for campus management</p>
+
+    <div class="nav-grid">
+      <a href="admin_announcements.html" class="nav-btn">📢 Manage Announcements</a>
+      <a href="admin_complaints.html" class="nav-btn">🏠 Manage Complaints</a>
+      <a href="admin_lost_found.html" class="nav-btn">🔍 Manage Lost & Found</a>
+      <a href="admin_tech_feed.html" class="nav-btn">🚀 Manage Tech Feed</a>
+      <a href="admin_meetings.html" class="nav-btn">🎯 Manage Meetings</a>
+      <a href="admin_polls.html" class="nav-btn">🗳️ Manage Polls</a>
+      <a href="../login.html" class="nav-btn" style="background-color: #dc3545;">🚪 Logout</a>
+    </div>
+  </div>
+
+  <style>
+    .container {
+      text-align: center;
+      padding: 50px 20px;
+    }
+
+    .nav-grid {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      max-width: 800px;
+      margin: 30px auto;
+    }
+
+    .nav-btn {
+      display: block;
+      padding: 15px 20px;
+      background-color: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+
+    .nav-btn:hover {
+      background-color: #0056b3;
+      transform: scale(1.05);
+      color: white;
+    }
+  </style>
+  <script src="../js/navigation.js"></script>
+</body>
+</html>

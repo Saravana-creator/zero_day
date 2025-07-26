@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CampusLink - Student Home</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/style.css">
+  <link rel="stylesheet" href="../styles/animations.css">
+  <link rel="stylesheet" href="../styles/navigation.css">
+</head>
+<body>
+  <div class="container animate-page-load">
+    <h1 class="animate-bounce-in">🎓 Student Portal</h1>
+    <p class="subtitle animate-fade-up">Your one-stop platform for all campus needs</p>
+
+    <div class="nav-grid animate-scale-in">
+      <a href="student_create.html" class="nav-btn hover-lift ripple-effect stagger-1">➕ Report Lost Item</a>
+      <a href="student_view.html" class="nav-btn hover-lift ripple-effect stagger-2">🔍 View Lost & Found Items</a>
+      <a href="student_schedule.html" class="nav-btn hover-lift ripple-effect stagger-3">🗓️ Timetable Scheduler</a>
+      <a href="student_announcements.html" class="nav-btn hover-lift ripple-effect stagger-4">📢 Campus Announcements</a>
+      <a href="student_complaints.html" class="nav-btn hover-lift ripple-effect stagger-5">🏠 Hostel Complaints</a>
+      <a href="student_tech_feed.html" class="nav-btn hover-lift ripple-effect stagger-6">🚀 Tech News & Opportunities</a>
+      <a href="student_meetings.html" class="nav-btn hover-lift ripple-effect stagger-7">📚 Study Sessions</a>
+      <a href="student_polls.html" class="nav-btn hover-lift ripple-effect stagger-8">🗳️ Campus Polls</a>
+      <a href="../login.html" class="nav-btn hover-lift ripple-effect" style="background: linear-gradient(135deg, #dc3545, #c82333); animation-delay: 0.9s;">🚪 Logout</a>
+    </div>
+  </div>
+
+  <style>
+    .container {
+      text-align: center;
+      padding: 50px 20px;
+    }
+
+    .nav-grid {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      max-width: 800px;
+      margin: 30px auto;
+    }
+
+    .nav-btn {
+      display: block;
+      padding: 20px 25px;
+      background: linear-gradient(135deg, #3f51b5, #667eea);
+      color: white;
+      text-decoration: none;
+      border-radius: 16px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 8px 25px rgba(63, 81, 181, 0.3);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      animation: cardSlideIn 0.6s ease-out;
+    }
+
+    .nav-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .nav-btn:hover::before {
+      left: 100%;
+    }
+
+    .nav-btn:hover {
+      background: linear-gradient(135deg, #303f9f, #5c6bc0);
+      transform: translateY(-8px) scale(1.03);
+      color: white;
+      box-shadow: 0 15px 35px rgba(63, 81, 181, 0.4);
+    }
+
+    .nav-btn:active {
+      transform: translateY(-4px) scale(1.01);
+      transition-duration: 0.1s;
+    }
+  </style>
+  <script src="../js/profile-manager.js"></script>
+  <script src="../js/navigation.js"></script>
+  <script src="../js/animations.js"></script>
+</body>
+</html>

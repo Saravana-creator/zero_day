@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Users</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .user-card { border: 1px solid #ddd; margin: 10px; padding: 15px; border-radius: 5px; }
+        .admin { background-color: #ffe6e6; }
+        .student { background-color: #e6f3ff; }
+        h2 { color: #333; }
+    </style>
+</head>
+<body>
+    <h1>Stored Users in Database</h1>
+    <button onclick="loadUsers()">Refresh Users</button>
+    <div id="usersList"></div>
+
+    <script>
+        async function loadUsers() {
+            try {
+                const response = await fetch('http://localhost:5000/api/auth/users');
+                const data = await response.json();
+                
+                const usersList = document.getElementById('usersList');
+                usersList.innerHTML = `<h3>Total Users: ${data.total}</h3>`;
+                
+                usersList.innerHTML += '<h2>Admins (' + data.admins.length + ')</h2>';
+                data.admins.forEach(admin => {
+                    usersList.innerHTML += `
+                        <div class="user-card admin">
+                            <strong>Name:</strong> ${admin.name}<br>
+                            <strong>Email:</strong> ${admin.email}<br>
+                            <strong>Role:</strong> ${admin.role}<br>
+                            <strong>Created:</strong> ${new Date(admin.createdAt).toLocaleString()}
+                        </div>
+                    `;
+                });
+                
+                usersList.innerHTML += '<h2>Students (' + data.students.length + ')</h2>';
+                data.students.forEach(student => {
+                    usersList.innerHTML += `
+                        <div class="user-card student">
+                            <strong>Name:</strong> ${student.name}<br>
+                            <strong>Email:</strong> ${student.email}<br>
+                            <strong>Role:</strong> ${student.role}<br>
+                            <strong>Created:</strong> ${new Date(student.createdAt).toLocaleString()}
+                        </div>
+                    `;
+                });
+                
+            } catch (error) {
+                document.getElementById('usersList').innerHTML = 'Error loading users: ' + error.message;
+            }
+        }
+        
+        // Load users on page load
+        loadUsers();
+    </script>
+</body>
+</html>
