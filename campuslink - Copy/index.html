@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>CampusLink - Login</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles/style.css" />
-  <link rel="stylesheet" href="styles/animations.css" />
-  <link rel="stylesheet" href="styles/enhanced-animations.css" />
-  <link rel="stylesheet" href="styles/visual-effects.css" />
-  <link rel="stylesheet" href="styles/navigation.css" />
+  <link rel="stylesheet" href="frontend/styles/style.css" />
+  <link rel="stylesheet" href="frontend/styles/animations.css" />
+  <link rel="stylesheet" href="frontend/styles/enhanced-animations.css" />
+  <link rel="stylesheet" href="frontend/styles/visual-effects.css" />
+  <link rel="stylesheet" href="frontend/styles/navigation.css" />
 </head>
 <body>
 
@@ -37,7 +37,7 @@
       <button type="submit" class="button hover-lift-3d ripple">Login</button>
     </form>
     <div class="bottom-text">
-      Don't have an account? <a href="signup.html" class="hover-glow">Sign up here</a>
+      Don't have an account? <a href="frontend/signup.html" class="hover-glow">Sign up here</a>
     </div>
   </div>
 
@@ -95,9 +95,9 @@
           
           setTimeout(() => {
             if (data.user.role === 'admin') {
-              window.location.href = 'admin/admin_home.html';
+              window.location.href = 'frontend/admin/admin_home.html';
             } else {
-              window.location.href = 'student/student_home.html';
+              window.location.href = 'frontend/student/student_home.html';
             }
           }, 1000);
         } else {
@@ -176,8 +176,8 @@
       }
     });
   </script>
-  <script src="js/visual-effects.js"></script>
-  <script src="js/navigation.js"></script>
+  <script src="frontend/js/visual-effects.js"></script>
+  <script src="frontend/js/navigation.js"></script>
   
   <style>
     @keyframes disappear {
