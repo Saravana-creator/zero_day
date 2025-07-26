@@ -88,9 +88,9 @@ app.post("/send-resolution-email", async (req, res) => {
 });
 
 
-// Default route for login.html
+// Default route for index.html
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/login.html"));
+  res.sendFile(path.join(__dirname, "../frontend/index.html"));
 });
 
 // Start server
